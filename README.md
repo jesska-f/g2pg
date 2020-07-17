@@ -7,13 +7,9 @@ This makes use of a `.env` file, which after much trial and error I finally got 
 
 Can install using `pip install g2pg`.
 
-To use (Was not winning getting this to work in a human friendly way)
+To use:
 
-`from g2pg.g2pg import get_df_from_gsheet`
-
-and
-
-`from g2pg.g2pg import df_to_db`
+`import g2pg`
 
 ### How does it work
 g2pg uses the `gspread` package to extract data from the Google Sheet. 
