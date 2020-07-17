@@ -18,7 +18,7 @@ with open(os.path.join(here, "requirements.txt"),"r") as f:
 
 setuptools.setup(
     name="g2pg",
-    version="1.2.4",
+    version="1.2.5",
     license = 'MIT',
     author="Jessica Franks",
     author_email="hello@jesska.co.za",
