@@ -1,11 +1,25 @@
 # g2pg
 g2pg takes a Google Sheet, converts it to a DataFrame, which you can then manipulate as you need to.
+
 This DataFrame can then be written to a PostgreSQL database table.
+
 This makes use of a `.env` file, which after much trial and error I finally got to work with gspread.
+
+Can install using `pip install g2pg`.
+
+To use (Was not winning getting this to work in a human friendly way)
+
+`from g2pg.g2pg import get_df_from_gsheet`
+
+and
+
+`from g2pg.g2pg import df_to_db`
 
 ### How does it work
 g2pg uses the `gspread` package to extract data from the Google Sheet. 
+
 Follow these directions to get the json credentials file that can  be used with `gspread` <https://gspread.readthedocs.io/en/latest/oauth2.html#for-bots-using-service-account>
+
 The json credentials need to be stored in a `.env` file. Don't upload the contents of your .env or json_credentials file to github unless you want everyone to know your secrets.
 
 If using this package you need to have a `.env` file or enviroment variables set in the following way.
@@ -34,8 +48,3 @@ There are 2 methods available:
     This writes the specified `df` to the `table_name` in the DB that is specified in the `.env` file.
     `schema` is optional and will default to `public` in postgres if not specified.
     `index_name` is the index of your df. If not specified, it will default to index (this is used as the primary key in your DB table).
-
-To use (Was not winning getting this to work in a human friendly way)
-`from g2pg.g2pg import get_df_from_gsheet`
-and
-`from g2pg.g2pg import df_to_db`
