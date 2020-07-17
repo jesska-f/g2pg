@@ -20,6 +20,8 @@ g2pg uses the `gspread` package to extract data from the Google Sheet.
 
 Follow these directions to get the json credentials file that can  be used with `gspread` <https://gspread.readthedocs.io/en/latest/oauth2.html#for-bots-using-service-account>
 
+Make sure you share any Gsheets with the email that is specified in your credentials file.
+
 The json credentials need to be stored in a `.env` file. Don't upload the contents of your .env or json_credentials file to github unless you want everyone to know your secrets.
 
 If using this package you need to have a `.env` file or enviroment variables set in the following way.
