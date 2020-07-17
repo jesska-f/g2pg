@@ -35,3 +35,7 @@ There are 2 methods available:
     `schema` is optional and will default to `public` in postgres if not specified.
     `index_name` is the index of your df. If not specified, it will default to index (this is used as the primary key in your DB table).
 
+To use (Was not winning getting this to work in a human friendly way)
+`from g2pg.g2pg import get_df_from_gsheet`
+and
+`from g2pg.g2pg import df_to_db`
