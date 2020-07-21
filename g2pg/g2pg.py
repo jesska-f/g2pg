@@ -45,7 +45,7 @@ def create_keyfile_dict():
         sys.exit(1)
     return variables_keys
 
-def get_df_from_gsheet(gsheet_name,worksheet_name='Sheet1'):
+def get_df_from_gsheet(gsheet_name,worksheet_name='Sheet1',skiprows=0):
     """
     Gets data from a google sheet worksheet and puts it in a DataFrame.\n
     Authorises with google oauth based on the data specified in your environment variables (see `create_keyfile_dict()`).\n
@@ -58,6 +58,8 @@ def get_df_from_gsheet(gsheet_name,worksheet_name='Sheet1'):
             Exact Name of Gsheet to extract data from. 
     worksheet_name : str, optional 
             Name of the worksheet to get the data from. (default is `Sheet1`)
+    skiprows : int
+            Rows to skip in the sheet before extracting the data
     Returns
     -------
     A DataFrame containing the data in the google sheet.
@@ -77,15 +79,18 @@ def get_df_from_gsheet(gsheet_name,worksheet_name='Sheet1'):
     try:    
         #Open the gsheet and put the data into a df
         sheet = gc.open(gsheet_name).worksheet(worksheet_name)
-        sheet_df = gd.get_as_dataframe(sheet,evaluate_formulas=True)
+        sheet_df = gd.get_as_dataframe(sheet,evaluate_formulas=True,skiprows=skiprows)
     except Exception as e:
         print(e)
         print('''Data extract from google sheet was unsuccessful.\nPlease check the name of the sheet and the worksheet, and that the client email specified in your env file has access to the sheet''')
         sys.exit(1)
     #find rows and columns with all nulls, to remove them from the df
-    nans_rows = sheet_df[sheet_df.isnull().all(axis=1)].index[0]-1
-    nans_columns = sheet_df.columns.drop(sheet_df.columns[sheet_df.isnull().all()])
-    sheet_df = sheet_df.loc[:nans_rows,nans_columns]
+    try:
+        nans_rows = sheet_df[sheet_df.isnull().all(axis=1)].index[0]-1
+        nans_columns = sheet_df.columns.drop(sheet_df.columns[sheet_df.isnull().all()])
+        sheet_df = sheet_df.loc[:nans_rows,nans_columns]
+    except:
+        pass
     #change column names to be db friendly
     sheet_df.columns = [("".join([i for i in c if i not in punctuation.replace('_','')])).lower().strip().replace(' ','_') for c in sheet_df.columns]
     return sheet_df
